@@ -6,9 +6,9 @@
  *
  */
 
-import {createRoot} from 'react-dom';
-import Root from './Root.client';
+import {createRoot} from 'react-dom'
+import Root from './Root.client'
 
-const initialCache = new Map();
-const root = createRoot(document.getElementById('root'));
-root.render(<Root initialCache={initialCache} />);
+const initialCache = new Map()
+const root = createRoot(document.getElementById('root'))
+root.render(<Root initialCache={initialCache} />)

@@ -13,5 +13,5 @@ export default function Spinner({active = true}) {
       role="progressbar"
       aria-busy={active ? 'true' : 'false'}
     />
-  );
+  )
 }

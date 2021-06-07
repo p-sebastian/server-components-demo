@@ -4,4 +4,4 @@ module.exports = {
   user: 'notesadmin',
   password: 'password',
   port: '5432',
-};
+}
