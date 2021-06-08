@@ -10,6 +10,8 @@ module.exports = {
       if (!user) {
         throw new Error(401, 'invalid token, please log in or sign up')
       }
+      delete user.password
+      req.user = user
       return next()
     })(req, res, next)
   },

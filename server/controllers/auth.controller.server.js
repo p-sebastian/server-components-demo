@@ -65,7 +65,7 @@ module.exports = {
     res.status(200).json({
       status: 'success',
       data: {
-        message: 'Yes you are. You are a Thor-n times developer',
+        user: req.user,
       },
     })
   },

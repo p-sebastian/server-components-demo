@@ -34,6 +34,7 @@ const logger = require('morgan')
 const ReactApp = require('../src/App.server').default
 const {db, pgp} = require('./database.server')
 const authRoutes = require('./routes/auth.route.server')
+const {errorHandler} = require('./error.server')
 
 // Don't keep credentials in the source tree in a real app!
 const pool = new Pool(require('../credentials'))
@@ -228,6 +229,7 @@ app.get('/sleep/:ms', function(req, res) {
   }, req.params.ms)
 })
 
+app.use(errorHandler)
 app.use(express.static('build'))
 app.use(express.static('public'))
 

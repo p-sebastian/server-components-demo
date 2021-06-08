@@ -29,12 +29,15 @@ options.jwtFromRequest = ExtractJwt.fromExtractors([
 
 passport.use(
   new Strategy(options, (req, jwtPayload, done) => {
-    pool.query('select * from users where id like $1', [jwtPayload.id]).then(({rows}) => {
-      if (!rows.length) {
-        return done('not found', false)
-      }
-      done(null, rows[0])
-    })
+    pool
+      .query('select * from users where id = $1', [jwtPayload.id])
+      .then(({rows}) => {
+        if (!rows.length) {
+          return done('not found', false)
+        }
+        done(null, rows[0])
+      })
+      .catch(e => done(e, false))
   })
 )
 
