@@ -10,5 +10,22 @@ import {createContext, useContext} from 'react'
 
 export const LocationContext = createContext()
 export function useLocation() {
-  return useContext(LocationContext)
+  const [location, setLocation] = useContext(LocationContext)
+  const setData = (data = {}) => setLocation({...location, ...data})
+
+  return [location, setData]
+}
+
+export function useAuth() {
+  const [location, setLocation] = useContext(LocationContext)
+
+  const setAuth = auth => setLocation({...location, ...auth})
+  return [location, setAuth]
+}
+
+export function useUser() {
+  const [location, setLocation] = useContext(LocationContext)
+
+  const setUser = user => setLocation({...location, user: {...user}})
+  return [location.user, setUser]
 }

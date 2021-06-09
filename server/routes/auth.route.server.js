@@ -8,8 +8,8 @@ const {authenticate} = authentication
 
 const authRouter = Router()
 
-authRouter.post('/signup', catchAsync(signup))
-authRouter.post('/login', catchAsync(login))
+authRouter.get('/signup', catchAsync(signup))
+authRouter.get('/login', catchAsync(login))
 authRouter.get('/amiworthy', authenticate, catchAsync(protectedRoute))
 
 module.exports = authRouter

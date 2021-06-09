@@ -107,15 +107,22 @@ async function renderReactTree(res, props) {
 }
 
 function sendResponse(req, res, redirectToId) {
-  const location = JSON.parse(req.query.location)
+  const location = JSON.parse(req.query.location) || {}
+  const {searchText, token, signUp, email, password, user = {}} = location
+  console.info(location)
   if (redirectToId) {
     location.selectedId = redirectToId
   }
+  // allows navigation
   res.set('X-Location', JSON.stringify(location))
   renderReactTree(res, {
-    selectedId: location.selectedId,
-    isEditing: location.isEditing,
-    searchText: location.searchText,
+    searchText,
+    token,
+    // signIn = true; signUp = false
+    signUp,
+    email,
+    password,
+    user,
   })
 }
 

@@ -6,15 +6,26 @@
  *
  */
 
+import {fetch} from 'react-fetch'
 import {Suspense} from 'react'
 import AppNavbar from './ui/navbar/Navbar.client'
 import NoteListSkeleton from './NoteListSkeleton'
 import Products from './ui/products/Products.server'
+import User from './ui/user/User.server'
 
-export default function App({selectedId, isEditing, searchText}) {
+// somehow Im gettin the location context passed as a prop
+export default function App(props) {
+  const {searchText, user, token} = props
+  const auth = authenticate(props)
+  console.info('auth', props, auth)
+
   return (
     <div>
-      <AppNavbar />
+      <AppNavbar>
+        <Suspense fallback={<NoteListSkeleton />}>
+          <User user={auth.data.user || user} token={auth.token || token} />
+        </Suspense>
+      </AppNavbar>
       <Suspense fallback={<NoteListSkeleton />}>
         <Products searchText={searchText} />
       </Suspense>
@@ -22,28 +33,15 @@ export default function App({selectedId, isEditing, searchText}) {
   )
 }
 
-/**
- * 
- * <div className="main">
-      <section className="col sidebar">
-        <section className="sidebar-header">
-          <img className="logo" src="logo.svg" width="22px" height="20px" alt="" role="presentation" />
-          <strong>React Notes</strong>
-        </section>
-        <section className="sidebar-menu" role="menubar">
-          <SearchField />
-          <EditButton noteId={null}>New</EditButton>
-        </section>
-        <nav>
-          <Suspense fallback={<NoteListSkeleton />}>
-            <NoteList searchText={searchText} />
-          </Suspense>
-        </nav>
-      </section>
-      <section key={selectedId} className="col note-viewer">
-        <Suspense fallback={<NoteSkeleton isEditing={isEditing} />}>
-          <Note selectedId={selectedId} isEditing={isEditing} />
-        </Suspense>
-      </section>
-    </div>
- */
+const authenticate = ({signUp, token, email, password}) => {
+  if (token || !email || !password) {
+    return {data: {}}
+  }
+  const data = fetch(
+    `http://localhost:4000/auth/${signUp ? 'signup' : 'login'}?email=${encodeURIComponent(
+      email
+    )}&password=${encodeURIComponent(password)}`
+  ).json()
+  console.info(data)
+  return data
+}

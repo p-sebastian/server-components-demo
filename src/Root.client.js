@@ -13,6 +13,7 @@ import {useServerResponse} from './Cache.client'
 import {LocationContext} from './LocationContext.client'
 
 export default function Root({initialCache}) {
+  console.info('initial cache', initialCache)
   return (
     <Suspense fallback={null}>
       <ErrorBoundary FallbackComponent={Error}>
@@ -23,11 +24,17 @@ export default function Root({initialCache}) {
 }
 
 function Content() {
+  // @NOTE also change me in api.server.js `renderReactTree`
   const [location, setLocation] = useState({
-    selectedId: null,
-    isEditing: false,
     searchText: '',
+    token: '',
+    // signIn = true; signUp = false
+    signUp: false,
+    email: '',
+    password: '',
+    user: {},
   })
+  console.info(location)
   const response = useServerResponse(location)
   return <LocationContext.Provider value={[location, setLocation]}>{response.readRoot()}</LocationContext.Provider>
 }
