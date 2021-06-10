@@ -11,6 +11,7 @@
     "@babel/register": "^7.12.1",
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/styles": "^4.11.4",
     "axios": "^0.21.1",
     "babel-loader": "8.1.0",
     "babel-preset-react-app": "10.0.0",
@@ -46,7 +47,6 @@
     "resolve": "1.12.0",
     "rimraf": "^3.0.2",
     "sanitize-html": "^2.2.0",
-    "styled-components": "^5.3.0",
     "webpack": "4.44.2",
     "webpack-cli": "^4.2.0"
   },

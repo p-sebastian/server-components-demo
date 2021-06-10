@@ -6,33 +6,37 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import CardMedia from '@material-ui/core/CardMedia'
 import Grid from '@material-ui/core/Grid'
+import Box from '@material-ui/core/Box'
 
 export default function ProductCard({product}) {
   const classes = useStyles()
   const {name, image, description} = product
   return (
-    <Grid item xs={6} md={4} lg={3}>
-      <Card className={classes.root} variant="outlined">
-        <CardMedia className={classes.media} image={image} title={name} />
-        <CardContent>
-          <Typography variant="h5" component="h2">
-            {name}
-          </Typography>
-          <Typography variant="body2" component="p">
-            {description}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">Learn More</Button>
-        </CardActions>
-      </Card>
+    <Grid item xs={12} sm={6} md={4} lg={3}>
+      <Box boxShadow={3}>
+        <Card className={classes.root}>
+          <CardMedia className={classes.media} image={image} title={name} />
+          <CardContent>
+            <Typography variant="h5" component="h2">
+              {name}
+            </Typography>
+            <Typography variant="body2" component="p">
+              {description}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small">Learn More</Button>
+          </CardActions>
+        </Card>
+      </Box>
     </Grid>
   )
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
     minWidth: 275,
+    backgroundColor: theme.palette.background.default,
   },
   bullet: {
     display: 'inline-block',
@@ -46,4 +50,4 @@ const useStyles = makeStyles({
     height: 0,
     paddingTop: '56.25%', // 16:9
   },
-})
+}))

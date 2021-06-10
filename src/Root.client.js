@@ -11,6 +11,8 @@ import {ErrorBoundary} from 'react-error-boundary'
 
 import {useServerResponse} from './Cache.client'
 import {LocationContext} from './LocationContext.client'
+import {MuiThemeProvider} from '@material-ui/core/styles'
+import {RootHooks} from './Root.hooks.client'
 
 export default function Root({initialCache}) {
   console.info('initial cache', initialCache)
@@ -24,6 +26,7 @@ export default function Root({initialCache}) {
 }
 
 function Content() {
+  const theme = useRootTheme()
   // @NOTE also change me in api.server.js `renderReactTree`
   const [location, setLocation] = useState({
     searchText: '',
@@ -36,7 +39,11 @@ function Content() {
   })
   console.info(location)
   const response = useServerResponse(location)
-  return <LocationContext.Provider value={[location, setLocation]}>{response.readRoot()}</LocationContext.Provider>
+  return (
+    <MuiThemeProvider theme={theme}>
+      <LocationContext.Provider value={[location, setLocation]}>{response.readRoot()}</LocationContext.Provider>
+    </MuiThemeProvider>
+  )
 }
 
 function Error({error}) {
@@ -47,3 +54,5 @@ function Error({error}) {
     </div>
   )
 }
+
+const {useRootTheme} = RootHooks

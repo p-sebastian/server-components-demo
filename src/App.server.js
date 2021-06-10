@@ -17,10 +17,9 @@ import User from './ui/user/User.server'
 export default function App(props) {
   const {searchText, user, token} = props
   const auth = authenticate(props)
-  console.info('auth', props, auth)
 
   return (
-    <div>
+    <div style={{height: '100vh'}}>
       <AppNavbar>
         <Suspense fallback={<NoteListSkeleton />}>
           <User user={auth.data.user || user} token={auth.token || token} />
